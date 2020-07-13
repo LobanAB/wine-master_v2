@@ -1,3 +1,6 @@
 env/
 .vscode/
-
+excel.py
+index.html
+template_cap.html
+.idea/

@@ -28,10 +28,10 @@ else:
     excel_file = args.file
 
 excel_data = pandas.read_excel(excel_file, sheet_name='Лист1', keep_default_na=False).to_dict(orient='index')
-output = collections.defaultdict(dict)
+output = collections.defaultdict(list)
 
 for wine in excel_data.values():
-    output[wine['Категория']][len(output[wine['Категория']])] = wine
+    output[wine['Категория']].append(wine)
 
 template = env.get_template('template.html')
 rendered_page = template.render(

@@ -20,23 +20,19 @@ delta_years = today.year - estimate.year
 parser = argparse.ArgumentParser(
     description='Программа генерирует шалон сайта на основании xlsx таблицы'
 )
-parser.add_argument('-f', '--file', help='Имя файла с расширением xlsx')
-args = parser.parse_args()
-if args.file is None:
-    excel_file = 'wine3.xlsx'
-else:
-    excel_file = args.file
+parser.add_argument('-f', '--file', help='Имя файла с расширением xlsx', default='wine.xlsx')
+excel_file = parser.parse_args().file
 
 excel_data = pandas.read_excel(excel_file, sheet_name='Лист1', keep_default_na=False).to_dict(orient='index')
-output = collections.defaultdict(list)
+wines = collections.defaultdict(list)
 
 for wine in excel_data.values():
-    output[wine['Категория']].append(wine)
+    wines[wine['Категория']].append(wine)
 
 template = env.get_template('template.html')
 rendered_page = template.render(
     date_delta=delta_years,
-    wines=output,
+    wines=wines,
 )
 
 with open('index.html', 'w', encoding="utf8") as file:

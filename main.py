@@ -32,7 +32,7 @@ for wine in excel_data.values():
 template = env.get_template('template.html')
 rendered_page = template.render(
     date_delta=delta_years,
-    wines=wines,
+    products=wines,
 )
 
 with open('index.html', 'w', encoding="utf8") as file:
